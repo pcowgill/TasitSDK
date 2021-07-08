@@ -1,0 +1,59 @@
+{
+  "name": "@tasit/contract-based-account",
+  "version": "0.0.33",
+  "private": false,
+  "description": "Library for onboarding a user using a smart-contract-based account.",
+  "main": "dist/index",
+  "module": "dist/contract-based-account.esm.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "ethereum",
+    "dapp",
+    "react",
+    "native"
+  ],
+  "author": "Tasit Labs",
+  "homepage": "https://tasit.dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tasitlabs/tasit-sdk.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "start": "npx tsdx watch",
+    "build": "npx tsdx build",
+    "test:tsdx": "npx tsdx test",
+    "lint": "npx tsdx lint src",
+    "test:mocha-tsnode": "npx mocha src/*.test.ts --require ts-node/register --file src/testHelpers/mochaSetup.ts --timeout 4000",
+    "test": "npm run test:tsdx",
+    "update": "npx ncu",
+    "update:write": "npm run update -- -u"
+  },
+  "bugs": {
+    "url": "https://github.com/tasitlabs/tasit-sdk/issues"
+  },
+  "dependencies": {
+    "@tasit/action": "^0.0.33",
+    "@tasit/contracts": "^0.0.33",
+    "axios": "^0.19.2",
+    "ethers": "^4.0.47"
+  },
+  "devDependencies": {
+    "@tasit/account": "^0.0.33",
+    "@tasit/test-helpers": "^0.0.33",
+    "npm-check-updates": "^6.0.1",
+    "sinon": "^9.0.2",
+    "ts-node": "^8.10.2",
+    "tsdx": "^0.13.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.3"
+  },
+  "gitHead": "41dbf759be32bad0d5f45282218ab0e4df40cb36"
+}

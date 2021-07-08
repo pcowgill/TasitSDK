@@ -1,0 +1,54 @@
+{
+  "name": "@tasit/account",
+  "version": "0.0.33",
+  "description": "Library for using Ethereum accounts",
+  "main": "dist/index",
+  "module": "dist/account.esm.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "ethereum",
+    "dapp",
+    "react",
+    "native"
+  ],
+  "author": "Tasit Labs",
+  "homepage": "https://tasit.dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tasitlabs/tasit-sdk.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "start": "npx tsdx watch",
+    "build": "npx tsdx build",
+    "test:tsdx": "npx tsdx test",
+    "lint": "npx tsdx lint src",
+    "test:mocha-tsnode": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' npx mocha --require ts-node/register --timeout 4000 src/*.test.ts",
+    "test": "npm run test:tsdx",
+    "update": "npx ncu",
+    "update:write": "npm run update -- -u"
+  },
+  "bugs": {
+    "url": "https://github.com/tasitlabs/tasit-sdk/issues"
+  },
+  "dependencies": {
+    "ethers": "^4.0.47"
+  },
+  "devDependencies": {
+    "@tasit/test-helpers": "^0.0.33",
+    "@types/node": "^14.0.13",
+    "npm-check-updates": "^7.0.1",
+    "ts-node": "^8.10.2",
+    "tsdx": "^0.13.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  },
+  "gitHead": "41dbf759be32bad0d5f45282218ab0e4df40cb36"
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "baseUrl": "./packages",
+    "paths": {
+      "tasit-*": ["*/src", "node_modules/*"]
+    },
+  },
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.js"]
+}

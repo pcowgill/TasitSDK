@@ -2,3 +2,8 @@
 **/node_modules/**/*
 lerna-debug.log
 **/dist/**/*
+*.tgz
+ganache-cli.log
+buidler-evm.log
+**/.vscode/
+yarn.lock

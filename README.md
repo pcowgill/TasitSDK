@@ -1,251 +1,38 @@
-# Tasit SDK
+# Tasit
 
 <div align="left">
-  <img src="/images/TasitLogoGrayscale.png" width="200" />
+  <img src="/assets/images/TasitLogoBlack.png" width="200" />
 </div>
 
 ### Introduction
 
-The Tasit SDK is a JavaScript SDK for making mobile Ethereum dapps using React Native.
+Tasit is a JavaScript/TypeScript SDK for making native mobile Ethereum dapps using React Native.
 
 _Disclaimer:_ The alpha version of this SDK is under active development. We encourage you to try it out today for hackathons, etc., but it's not ready for anything involving real funds on mainnet. If you'd prefer to wait for a more battle-tested release, please watch this repo with the `Releases only` setting and/or sign up to be notified about our releases on the [tasit.io](https://tasit.io) website.
 
-##### Already convinced you've been looking for something like this?
-
-You can continue right on to the [Getting started](#getting-started) section below.
-
-##### A bit skeptical about the need for mobile dapps?
-
-You might want to jump ahead to the "why" sections to start:
-
-- [Why (from the user's perspective)?](#why-from-the-users-perspective)
-
-- [Why (from a developer / Ethereum enthusiast’s perspective)?](#why-from-a-developer--ethereum-enthusiasts-perspective)
-
-### Table of contents
-
-[Getting started](#getting-started)
-
-[Features](#features)
-
-- [Account and private key generation](#account-and-private-key-generation)
-- [Reading and writing data and reacting to events](#reading-and-writing-data-and-reacting-to-events)
-- [Advanced support for popular ERC standards](#advanced-support-for-popular-erc-standards)
-- [Onboarding](#onboarding)
-- [Configurable JSON-RPC client](#configurable-json-rpc-client)
-- [Apps generated with the Tasit SDK are customizable](#apps-generated-with-the-tasit-sdk-are-customizable)
-- [Tool for finding the address of a popular smart contract](#tool-for-finding-the-address-of-a-popular-smart-contract)
-- [Serenity support](#serenity-support)
-
-[Why](#why)
-
-[Contact us](#contact-us)
-
 ### Getting started
 
-You can use the Tasit SDK to create user-friendly mobile iOS and Android apps for a dapp using React Native.
-
-Looking for the entry point for the `tasit-sdk` package? [That's here](/packages/tasit-sdk/). The Tasit SDK is a collection of smaller packages exported as one using [lerna](https://lernajs.io/).
-
-#### Installation
-
-Getting started is as simple as running
-
-`npm install --save tasit-sdk`
-
-#### Usage
-
-Are you looking to add functionality to a pre-existing app using the Tasit SDK?
-
-Using the Tasit SDK from within your app is simple.
-In `App.js` or the appropriate React Native component, import whichever APIs you need from the Tasit SDK.
-
-```javascript
-import { Account } from "tasit-sdk";
-const wallet = Account.create();
-console.log(wallet.address); // '0x...'
-// ...
-```
-
-#### Automatic scaffolding using the Tasit CLI
-
-Are you starting a project from scratch? Let the Tasit CLI (installed automatically with the Tasit SDK) scaffold out your project for you.
-
-Just run `npx tasit init` to automatically generate the scaffolding for a mobile dapp project.
-
-Alternatively, for popular ERC standards like ERC-721 for NFTs, you can even run `npx tasit init --nft` to instantly create a standalone mobile dapp for CryptoKitties, Decentraland, etc.
-
-This app scaffold comes ready to submit for beta testing on iOS with Testflight and on Android with Google Play Beta track, so you can focus on the core features of your dapp like you would do on the web.
-
-#### Modular
-
-The Tasit SDK is designed with modularity in mind. Are you only planning on using the Tasit SDK for generating an Ethereum acccount in your app? That works too!
-
-You can install `tasit-account` directly and keep your app's dependencies leaner.
-
-```
-npm install --save tasit-account
-```
-
-Then the usage example from before becomes:
-
-```javascript
-import Account from "tasit-account";
-// ...
-```
-
-...with the rest of the code remaining the same.
-
-### Features
-
-#### Account and private key generation
-
-Using the Tasit SDK, you can generate a new Ethereum account and private key.
-
-The Tasit SDK makes it simple for a new account to be instantiated in each mobile app it is used in.
-
-The intended UX is that this account should NOT have any significant amount of ETH, ERC20, or ERC721 tokens sent to it. This app is NOT a wallet. Instead, this address should be authorized to perform actions on behalf of a smart-contract-based identity or software wallet a user already has with some ETH or tokens. This is an ephemeral account for that app on the device, and as the user gets more familiar with it their account can be progressively upgraded to a personal DAO later or their funds can be stored in their preferred primary software wallet.
-
-[`tasit-account` is the child package](/packages/tasit-account/) that implements these features for the Tasit SDK.
-
-_This means fewer steps that need to be taken to onboard a new user._
-
-#### Reading and writing data and reacting to events
-
-The Tasit SDK provides JavaScript middleware for reading from and writing to smart contracts (and listening to events) through an expressive API. This middleware wraps the core ethers.js contract API for making JSON-RPC requests.
-
-This library is written in such a way that the developer using the SDK can just think about writing data and listening for more data. The fact that there's a blockchain powering this is an implementation detail that is abstracted away.
-
-[Here is a lot more info](/packages/tasit-action/README.md) about how this can be used.
-
-[`tasit-action` is the child package](/packages/tasit-action/) that implements these features for the Tasit SDK.
-
-_This makes the experience for new developers working on a mobile app with the Tasit SDK simpler, which means more mobile dapps for end users._
-
-#### Advanced support for popular ERC standards
-
-Classes of smart contracts we support include [NFTs](http://erc721.org/), [TCRs](https://medium.com/@simondlr/city-walls-bo-taoshi-exploring-the-power-of-token-curated-registries-588f208c17d5), [DAOs](https://blog.aragon.org/bringing-daos-back-aragon-monthly-92756cb65639/), and two-sided marketplaces (like Gitcoin, CryptoCribs, Ethlance, etc.). There’s an ERC-standard-specific JavaScript API wrapping the lower-level Tasit SDK API for reading and writing and listening for data so that the function-names in the Tasit SDK are tailored to that type of dapp. As long as we’ve built the tooling to interact with that class of dapp at least once before, the Tasit SDK can “automagically” support any new dapp of that type.
-
-[`tasit-action` is the child package](/packages/tasit-action/) that implements these features for the Tasit SDK.
-
-_This means there’s a network effect for the Tasit SDK, so once we have a few apps using it, it will be much faster to make new apps with it._
-
-#### Onboarding
-
-This SDK takes an opinionated approach to onboarding (although since it's a modular repo, you still retain the ability to use other child packages and not the onboarding-related ones if you prefer). The SDK supports read-only mode, meta-transactions, smart-contract-based accounts, and connecting with your mobile Ethereum wallet.
-
-##### Read-only for as long as possible
-
-A native mobile dapp should be read-only for as long as possible. The user shouldn't know there's a blockchain involved or see anything about an account, and an Ethereum account shouldn't even be created until it becomes necessary. Why go through an onboarding flow at all right away?
-
-[`tasit-action` is the child package](/packages/tasit-action/) that implements these features for the Tasit SDK.
-
-##### For users new to Ethereum with no funds
-
-For users without any ETH or tokens, any costs the user incurs at first should be subsidized. Give them a smart-contract-based account so that the UX around securing keys and recovering funds is simpler.
-
-This can be done using [meta-transactions](https://medium.com/@austin_48503/ethereum-meta-transactions-90ccf0859e84) or [UniversalLoginSDK (ERC 1077 and 1078)](https://universallogin.io/) or [GnosisSafe](https://safe.gnosis.io/) or an [Aragon personal DAO](http://blog.aragon.one/enter-the-world-of-personal-daos).
-
-The approach with meta-transactions (and universal login) is that the user's account is only used to sign messages, and then as a developer you can use your preferred centralized or decentralized solution to relay that as an Ethereum tx and pay and/or be rewarded as each solution sees fit.
-
-[`tasit-identity-contract` is the child package](/packages/tasit-identity-contract/) that implements these features for the Tasit SDK.
-
-##### For users that do have funds
-
-Connects with your preferred mobile Ethereum wallet. Using ERC20+721 approvals or [WalletConnect](https://walletconnect.org/).
-
-Users can continue to keep their funds in a proper wallet with better security guarantees if they do already have ETH, tokens, etc. and use them with this dapp.
-
-A user flow where a dapp's ephemeral account requests an approval for X ERC20 tokens of type A or one ERC721 token of type B is supported in the SDK.
-
-Through compatibility with WalletConnect, any standalone dapp can be authorized to take actions in a way that has only been possible in wallet apps to date. The wallet might be the [Gnosis Safe personal edition](https://blog.gnosis.pm/announcing-the-gnosis-safe-beta-personal-edition-19a69a4453e8), the [Balance wallet](https://twitter.com/ricburton/status/1038772498756714496), Status, Coinbase Wallet, Argent, BRD, etc.
-
-[`tasit-link-wallet` is the child package](/packages/tasit-link-wallet/) that implements these features for the Tasit SDK.
-
-##### Wrapping up onboarding
-
-_This means a flow that users will be used to which decreases the friction for onboarding people who have used other Ethereum dapps._
-
-Have a strong opinion on which onboarding flow we should prioritize the most? Please [reach out](#contact-us)!
-
-#### Configurable JSON-RPC client
-
-We realize that different developers have different takes on whether it's an acceptable compromise to use Infura in the way that MetaMask does in the browser or whether a local Ethereum light client is warranted more like in the original version of Status or Augur. We anticipate that in the short term, almost all developers using this SDK will use Infura. It's a centralized compromise solution for now. We leave the JSON-RPC provider configurable so that the SDK doesn't take an opinionated stance on this for now.
-
-[`tasit-action` is the child package](/packages/tasit-action/) that implements these features for the Tasit SDK.
-
-There are a couple projects working to make it simple to spin up your own high-availability, high-performance JSON-RPC client(s) (including Infura) or to use a decentralized and incentivized network of full nodes, so that should decentralize things a bit until we get to Serenity. See [DAppNode](https://dappnode.io/), [denode](https://github.com/ChainSafeSystems/denode), [Vipnode](https://vipnode.org/), and [Incubed](https://slock.it/incubed.html) by slock.it.
-
-##### In the future
-
-We have no plans until Serenity to make a special abstraction for running a local a light geth node like Status did originally. The Tasit SDK works with whatever JSON-RPC client you point it at, but we won't be adding an abstraction for using a light client within the native mobile dapp until Serenity. People have had too many issues with this on mobile (dropped network connections, using all disk space, battery usage, etc.
-
-Looking towards the future, light and ultralight client projects we're tracking for first-class support in this SDK include:
-
-- [Nimbus](https://nimbus.status.im/) by Status
-- [Mustekala](https://www.musteka.la/) by MetaMask
-- [LightJS](https://github.com/paritytech/js-libs/tree/master/packages/light.js) by Parity
-
-#### Apps generated with the Tasit SDK are customizable
-
-The Decentraland and CryptoKitties apps generated using `tasit init --nft` ship with styled-but-customizable React Native components for using each feature of the dapp, leveraging the js middleware.
-
-_This also makes the experience for new developers working on a mobile app with the Tasit SDK simpler, which also means more mobile dapps for end users._
-
-#### Tool for finding the address of a popular smart contract
-
-The Tasit SDK also provides a standalone tool for discovering the current address of a high-profile dapp project’s primary smart contract interface. We detect the interface / ERC standard a smart contract implements using ERC-165 standard interface detection.
-
-We also track the latest ABI and interface address for the most heavily used dapp projects directly via their open-source GitHub repos.
-
-[`tasit-contracts` is the child package](/packages/tasit-contracts/) that implements these features for the Tasit SDK.
-
-_This makes it simpler to customize the autogenerated app for a certain ERC standard and swap it to use with your own smart contracts or the already-on-chain smart contracts for a different dapp of that same ERC-type._
-
-#### Serenity support
-
-The Tasit SDK will work with the Ethereum Serenity release. We support Ethereum-based dapps to start, and in the long run the Tasit SDK will work with any blockchain that uses EVM and/or eWASM.
-
-_In order for the Tasit SDK to make a difference for current and future users of Ethereum, it will need to support future versions of the EVM._
-
-### Why?
-
-#### Why (from the user's perspective)?
-
-Today, using a dapp from a phone is painful. Almost no dapps have standalone mobile apps, and you're not easily able to use the dapp without ETH/tokens or with the ETH/tokens you have in another wallet. We lose mainstream people from the onboarding funnel because of this. Some dapps can be used inside a single app like Coinbase Wallet or Status that serves as a dapp browser, but this feels like a terribly broken UX for anyone who has been using a mobile phone for a while, and it also feels like broken UX for people who are used to using web-based dapps with MetaMask (where the wallet mostly stays out of the way until you need it). The ideal UX would be installing each mobile dapp in a way that feels the same as installing any mobile app, and giving it permission to take actions during onboarding with the costs subsidized by others or with your ETH/tokens held in a separate wallet.
-
-The idea is that the Tasit SDK would be used by many different mobile apps on a user's device. Once the Tasit SDK is around, more dapps will have dedicated mobile apps. This will remove a key barrier to mainstream adoption of Ethereum dapps.
-
-#### Why (from a developer / Ethereum enthusiast's perspective)?
-
-The user-facing answer for "Why?" focused on the UX/product, since that's the main thing that mainstream users care about. Here we'll touch on more technical/ideological arguments for why it's important that the Ethereum community creates more mobile dapps.
-
-One major reason most dapps don’t have standalone mobile apps today is because it’s hard for developers to build mobile Ethereum dapps. There isn’t much good tooling for it. Most developers building interesting new mobile apps these days use React Native to automatically support both iOS and Android, but there is little-to-no tooling for Ethereum in the React Native ecosystem. The Tasit SDK provides that tooling.
-
-The web-based front ends for most dapps these days are written with React, so using React Native for the native mobile version is a natural fit.
-
-Developers shouldn't need to reinvent the wheel for each new dapp: account and private key generation, linking to another wallet or adding meta-transaction support, etc. Let the Tasit SDK handle that bit and focus on the business logic for your dapp.
-
-##### Proof of decentralization
-
-Tasit will serve as "proof of decentralization" for the dapps we support. Vitalik tweeted 'One simple litmus test for whether or not a blockchain project is truly decentralized: can a third party independently make a client for it, and do everything that the "official" client can?'. It's time for major decoupling of "back end" and front end.
-
-##### Right to exit for users
-
-A single company's financial incentives determining how a software product works is a bummer for users. See Facebook's newsfeed changing to clickbait, or see Twitter users clamoring for simple changes to the product like spambot or harassment detection to no avail.
+📄 Check out our docs at [docs.tasit.io](https://docs.tasit.io/) 📄
 
 ### Contact us
 
-We love getting feedback from the community, so please feel free to reach out.
+Please feel free to reach out.
 
-- [Website](https://tasit.io/)
+   | Contact method | Link |
+   | ------------- | ------------- |
+   | 🤐  Website | [tasit.io](https://tasit.io/) |
+   | 🐦  Twitter  | [@TasitProject](https://twitter.com/TasitProject) |
+   | 📝  Medium  | [medium.com/tasit](https://medium.com/tasit) |
+   | 💬  Discord  | [discordapp.com/invite/bRp4QKq](https://discordapp.com/invite/bRp4QKq) |
+   | 💬  Telegram | [t.me/tasitproject](https://t.me/tasitproject) |
+   | 📧  Email  | [team@tasit.io](mailto:team@tasit.io) |
+   | 🗺️  Roadmap  | [github.com/orgs/tasitlabs/projects/1](https://github.com/orgs/tasitlabs/projects/1) |
+   | 💡  Feature requests  | [feedback.tasit.io/feature-requests](http://feedback.tasit.io/feature-requests) |
 
-- [Twitter](https://twitter.com/tasitlabs)
+### Open-source funding
 
-- [Telegram](https://t.me/tasitlabs)
+Development of Tasit is supported in part by [Gnosis](https://github.com/gnosis/) through their [GECO](https://github.com/gnosis/GECO) grant initiative and by the [Ethereum Foundation](https://ethereum.foundation/) through the [ecosystem support program](https://esp.ethereum.foundation).
 
-- [Email](mailto:founders@tasit.io)
+This project is open-source and in need of additional funding to sustain work on it. If you're able to contribute, please consider [supporting the project on Gitcoin Grants](https://gitcoin.co/grants/183/tasit-native-mobile-ethereum-dapps) or sending ETH or DAI to the Tasit project's contract address:
 
-- [Feature requests](https://tasit.canny.io/feature-requests)
-
-- [Project Kanban board](https://github.com/orgs/tasitlabs/projects/1)
+`0x7d888a9036b5a96f77b433e65b9be1b122f8a499` ([Etherscan](https://etherscan.io/address/0x7d888a9036b5a96f77b433e65b9be1b122f8a499))
